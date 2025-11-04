@@ -3,25 +3,21 @@ import { login as loginService, getMe } from '../../services/authService';
 import { toggleProblemStatus as toggleService } from '../../services/dsaService';
 import Cookies from 'js-cookie';
 
-// Get token from cookie
 const token = Cookies.get('token') || null;
 
 const initialState = {
   user: null,
   token: token,
-  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: 'idle',
   error: null,
 };
 
-// Async Thunk for login
 export const login = createAsyncThunk(
   'auth/login',
-  // Updated to use email and password
   async ({ email, password }, thunkAPI) => {
     try {
-      // Pass email and password to the service
       const data = await loginService(email, password);
-      Cookies.set('token', data.token, { expires: 1 }); // Set cookie for 1 day
+      Cookies.set('token', data.token, { expires: 1 });
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -29,24 +25,22 @@ export const login = createAsyncThunk(
   }
 );
 
-// Async Thunk for getting user data
 export const loadUser = createAsyncThunk('auth/me', async (_, thunkAPI) => {
   try {
     const data = await getMe();
     return data;
   } catch (error) {
-    Cookies.remove('token'); // Remove invalid token
+    Cookies.remove('token');
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-// Async Thunk for toggling problem status
 export const toggleProblemStatus = createAsyncThunk(
   'auth/toggleProblemStatus',
   async (problemId, thunkAPI) => {
     try {
       const res = await toggleService(problemId);
-      return res.data; // Returns new completedProblems array
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -58,14 +52,13 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      Cookies.remove('token'); // Remove token from cookie
+      Cookies.remove('token');
       state.user = null;
       state.token = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      // Login
       .addCase(login.pending, (state) => {
         state.status = 'loading';
       })
@@ -78,13 +71,12 @@ export const authSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload.msg || 'Login Failed';
       })
-      // Load User (getMe)
       .addCase(loadUser.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(loadUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.user = action.payload; // This will now contain { _id, name, email, completedProblems }
+        state.user = action.payload;
       })
       .addCase(loadUser.rejected, (state, action) => {
         state.status = 'failed';
@@ -92,7 +84,6 @@ export const authSlice = createSlice({
         state.user = null;
         state.token = null;
       })
-      // Toggle Problem Status
       .addCase(toggleProblemStatus.fulfilled, (state, action) => {
         if (state.user) {
           state.user.completedProblems = action.payload;

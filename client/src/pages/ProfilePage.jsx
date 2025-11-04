@@ -28,7 +28,6 @@ function ProfilePage() {
     fetchData();
   }, []);
 
-  // Memoize calculations for performance
   const progressStats = useMemo(() => {
     if (!user || problems.length === 0) {
       return {
@@ -50,7 +49,7 @@ function ProfilePage() {
     return { completedCount, totalCount, percentage, completedProblems };
   }, [user, problems]);
 
-  // Group completed problems by topic
+
   const completedByTopic = useMemo(() => {
     const topicMap = new Map(topics.map((t) => [t._id, { ...t, problems: [] }]));
     
@@ -76,11 +75,10 @@ function ProfilePage() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-8 space-y-8">
-      {/* User Details Card */}
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">My Profile</h1>
         <div className="flex items-center space-x-4">
-          <div className="flex-shrink-0 p-3 bg-blue-100 rounded-full">
+          <div className="shrink-0 p-3 bg-blue-100 rounded-full">
             <FiUser className="w-8 h-8 text-blue-600" />
           </div>
           <div>
@@ -93,7 +91,6 @@ function ProfilePage() {
         </div>
       </div>
 
-      {/* Progress Summary Card */}
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-gray-900 mb-4">
           Overall Progress
@@ -112,7 +109,6 @@ function ProfilePage() {
         </div>
       </div>
 
-      {/* Completed Problems List Card */}
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-gray-900 mb-6">
           Completed Problems

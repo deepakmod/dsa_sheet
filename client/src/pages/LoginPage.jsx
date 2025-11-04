@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../features/auth/authSlice';
-import { FiMail, FiLock, FiLogIn, FiEye, FiEyeOff } from 'react-icons/fi'; // Import eye icons
+import { FiMail, FiLock, FiLogIn, FiEye, FiEyeOff } from 'react-icons/fi';
 import Spinner from '../components/ui/Spinner';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // State for toggle
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,14 +64,13 @@ function LoginPage() {
             <FiLock className="absolute w-5 h-5 text-gray-400 top-3 left-3" />
             <input
               id="password"
-              type={showPassword ? 'text' : 'password'} // Dynamic type
+              type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password"
               className="w-full py-2.5 pl-10 pr-10 text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent" // Increased pr-10
             />
-            {/* Toggle Button */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}

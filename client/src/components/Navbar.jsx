@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
-// --- 1. Import the User icon ---
 import { FiLogOut, FiBarChart2, FiUser } from 'react-icons/fi';
 
 function Navbar() {
@@ -15,7 +14,6 @@ function Navbar() {
 
     return (
         <nav className="flex items-center justify-between p-4 bg-white shadow-lg sticky top-0 z-50">
-            {/* --- Logo/Brand Link (Unchanged) --- */}
             <Link
                 to="/"
                 className="flex items-center gap-2 text-xl font-bold text-cyan-600"
@@ -24,7 +22,6 @@ function Navbar() {
                 <span>DSA Sheet</span>
             </Link>
 
-            {/* --- Auth-aware section --- */}
             {user && (
                 <div className="flex items-center gap-4">
 

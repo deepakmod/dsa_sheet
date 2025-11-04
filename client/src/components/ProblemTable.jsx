@@ -16,7 +16,6 @@ import {
   FiChevronsUp,
 } from 'react-icons/fi';
 
-// A "cell" component for the level
 const LevelCell = ({ level }) => {
   const levelColor = {
     Easy: 'bg-green-100 text-green-800',
@@ -40,7 +39,6 @@ const LevelCell = ({ level }) => {
   );
 };
 
-// A "cell" component for the checkbox
 const StatusCell = ({ problemId }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -62,7 +60,6 @@ const StatusCell = ({ problemId }) => {
   );
 };
 
-// A "cell" component for the links
 const LinksCell = ({ links }) => (
   <div className="flex items-center gap-3">
     <a
@@ -102,7 +99,7 @@ function ProblemTable({ data }) {
         accessorKey: '_id',
         header: 'Status',
         cell: ({ row }) => <StatusCell problemId={row.original._id} />,
-        size: 80, // % width
+        size: 80,
       },
       {
         accessorKey: 'title',
