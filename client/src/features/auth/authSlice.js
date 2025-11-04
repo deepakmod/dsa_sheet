@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
     try {
       // Pass email and password to the service
       const data = await loginService(email, password);
-      Cookies.set('token', data.token, { expires: 1, secure: true }); // Set cookie for 1 day
+      Cookies.set('token', data.token, { expires: 1 }); // Set cookie for 1 day
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
